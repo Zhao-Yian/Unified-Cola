@@ -3,24 +3,20 @@
   const isZh = lang.toLowerCase().startsWith("zh");
 
   const copy = {
-    all: isZh ? "全部" : "All",
     landscape: isZh ? "横图" : "Landscape",
     portrait: isZh ? "竖图" : "Portrait",
-    square: isZh ? "方图" : "Square",
     open: isZh ? "点击查看大图" : "Click to open",
     close: isZh ? "关闭" : "Close",
     previous: isZh ? "上一张" : "Previous",
     next: isZh ? "下一张" : "Next",
     hint: isZh
-      ? "按宽高比筛选，点击图片可放大查看。"
-      : "Filter by aspect ratio, then click an image to inspect it.",
+      ? "切换横图/竖图缩略图，点击图片可放大查看。"
+      : "Switch between landscape and portrait thumbnails, then click an image to inspect it.",
   };
 
   const ratioLabels = {
-    all: copy.all,
     landscape: copy.landscape,
     portrait: copy.portrait,
-    square: copy.square,
   };
 
   const classify = (img) => {
@@ -29,9 +25,7 @@
     if (!width || !height) return "landscape";
 
     const ratio = width / height;
-    if (ratio > 1.08) return "landscape";
-    if (ratio < 0.92) return "portrait";
-    return "square";
+    return ratio >= 1 ? "landscape" : "portrait";
   };
 
   const readyImage = (img) => {
@@ -130,7 +124,6 @@
     if (!slides.length) return;
 
     carousel.classList.add("is-enhanced");
-    carousel.dataset.activeRatio = "all";
 
     await Promise.all(
       slides.map(async (slide) => {
@@ -140,7 +133,6 @@
         await readyImage(img);
         const ratio = classify(img);
         slide.dataset.ratio = ratio;
-        slide.dataset.ratioLabel = ratioLabels[ratio];
 
         img.setAttribute("loading", "lazy");
         img.setAttribute("decoding", "async");
@@ -161,12 +153,14 @@
     const counts = slides.reduce(
       (acc, slide) => {
         const ratio = slide.dataset.ratio || "landscape";
-        acc.all += 1;
         acc[ratio] += 1;
         return acc;
       },
-      { all: 0, landscape: 0, portrait: 0, square: 0 }
+      { landscape: 0, portrait: 0 }
     );
+
+    const defaultRatio = counts.landscape ? "landscape" : "portrait";
+    carousel.dataset.activeRatio = defaultRatio;
 
     const controls = document.createElement("div");
     controls.className = "sample-gallery-controls";
@@ -182,52 +176,49 @@
     const chips = document.createElement("div");
     chips.className = "sample-ratio-chips";
 
+    const showRatio = (ratio, shouldScroll = true) => {
+      carousel.dataset.activeRatio = ratio;
+      chips.querySelectorAll(".sample-ratio-chip").forEach((chip) => {
+        const active = chip.dataset.ratio === ratio;
+        chip.classList.toggle("is-active", active);
+        chip.setAttribute("aria-pressed", active ? "true" : "false");
+      });
+
+      slides.forEach((slide) => {
+        slide.hidden = slide.dataset.ratio !== ratio;
+      });
+
+      const firstVisible = visibleSlides(carousel)[0];
+      if (shouldScroll && firstVisible) {
+        firstVisible.scrollIntoView({
+          behavior: "smooth",
+          block: "nearest",
+          inline: "start",
+        });
+      }
+    };
+
     Object.keys(ratioLabels).forEach((ratio) => {
       const button = document.createElement("button");
       button.type = "button";
       button.className = "sample-ratio-chip";
       button.dataset.ratio = ratio;
       button.textContent = `${ratioLabels[ratio]} ${counts[ratio]}`;
-      button.setAttribute("aria-pressed", ratio === "all" ? "true" : "false");
-      if (ratio === "all") button.classList.add("is-active");
+      button.setAttribute(
+        "aria-pressed",
+        ratio === defaultRatio ? "true" : "false"
+      );
+      if (ratio === defaultRatio) button.classList.add("is-active");
       if (!counts[ratio]) button.disabled = true;
 
-      button.addEventListener("click", () => {
-        carousel.dataset.activeRatio = ratio;
-        chips.querySelectorAll(".sample-ratio-chip").forEach((chip) => {
-          const active = chip === button;
-          chip.classList.toggle("is-active", active);
-          chip.setAttribute("aria-pressed", active ? "true" : "false");
-        });
-
-        slides.forEach((slide) => {
-          slide.hidden = ratio !== "all" && slide.dataset.ratio !== ratio;
-        });
-
-        const firstVisible = visibleSlides(carousel)[0];
-        if (firstVisible) {
-          firstVisible.scrollIntoView({
-            behavior: "smooth",
-            block: "nearest",
-            inline: "start",
-          });
-        }
-      });
+      button.addEventListener("click", () => showRatio(ratio));
 
       chips.append(button);
     });
 
     controls.append(hint, chips);
     carousel.prepend(controls);
-
-    carousel.querySelectorAll(".sample-dots a").forEach((dot) => {
-      dot.addEventListener("click", () => {
-        const allChip = chips.querySelector('[data-ratio="all"]');
-        if (allChip && carousel.dataset.activeRatio !== "all") {
-          allChip.click();
-        }
-      });
-    });
+    showRatio(defaultRatio, false);
 
     carousel.dataset.galleryIndex = String(index + 1);
   };
