@@ -40,10 +40,14 @@ body {
   border-radius: 28px;
   background: rgba(255, 255, 255, 0.94);
   box-shadow: var(--shadow);
+  max-width: 100%;
+  overflow-x: hidden;
+  overflow-wrap: anywhere;
 }
 
 a {
   color: var(--accent);
+  overflow-wrap: anywhere;
 }
 
 h1,
@@ -96,8 +100,18 @@ picture,
 table {
   display: block;
   width: 100%;
+  max-width: 100%;
   overflow-x: auto;
   border-collapse: collapse;
+}
+
+pre {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+code {
+  overflow-wrap: anywhere;
 }
 
 th,
@@ -110,6 +124,21 @@ code {
   padding: 0.12rem 0.28rem;
   border-radius: 6px;
   background: rgba(15, 23, 42, 0.06);
+}
+
+.page-content mjx-container {
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.page-content mjx-container[display="true"] {
+  display: block;
+  padding-bottom: 0.25rem;
+}
+
+.page-content mjx-container svg {
+  max-width: 100%;
 }
 
 .site-header {
