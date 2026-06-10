@@ -212,7 +212,7 @@ This section reports qualitative results on the three tasks.
 
 ### 4.1 Text-to-image
 
-The following carousel shows several single-image samples.
+The gallery below automatically groups samples by aspect ratio, with landscape, portrait, and square views. Click any image to inspect it in a larger viewer and continue browsing sample by sample.
 
 
 <div class="sample-carousel" aria-label="Text-to-image sample gallery">
