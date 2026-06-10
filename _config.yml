@@ -1,0 +1,19 @@
+title: Unified Cola
+description: "基于 Cola DLM 的统一多模态 Flow Matching"
+url: "https://zhao-yian.github.io"
+baseurl: "/Unified-Cola"
+
+markdown: kramdown
+kramdown:
+  input: GFM
+  math_engine: mathjax
+
+plugins:
+  - jekyll-relative-links
+
+relative_links:
+  enabled: true
+  collections: true
+
+exclude:
+  - make_mask_fig.py
