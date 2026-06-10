@@ -112,6 +112,48 @@ code {
   background: rgba(15, 23, 42, 0.06);
 }
 
+.site-header {
+  border-bottom: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.86);
+  backdrop-filter: blur(18px);
+}
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: min(100% - 2rem, 1080px);
+  margin: 0 auto;
+  padding: 0.9rem 0;
+  gap: 1rem;
+}
+
+.site-title {
+  color: var(--text);
+  font-size: 1.1rem;
+  font-weight: 760;
+  letter-spacing: -0.02em;
+  text-decoration: none;
+}
+
+.site-links {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.site-links a {
+  color: var(--muted);
+  font-size: 0.95rem;
+  text-decoration: none;
+}
+
+.site-links a:hover {
+  color: var(--accent);
+}
+
 .sample-carousel {
   position: relative;
   margin: 1.25rem 0 2rem;
@@ -268,6 +310,18 @@ code {
   .page-shell {
     width: min(100% - 1rem, 1080px);
     padding-top: 0.75rem;
+  }
+
+  .site-nav {
+    width: min(100% - 1rem, 1080px);
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 0.75rem 0;
+  }
+
+  .site-links {
+    gap: 0.75rem;
+    justify-content: flex-start;
   }
 
   .page-content {

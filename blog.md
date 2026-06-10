@@ -1,14 +1,16 @@
 ---
 layout: default
+lang: en
 title: "Unified Multimodal Flow Matching with Cola DLM"
-thumbnail: ./assets/fig-unified-overview.png
+thumbnail: /assets/fig-unified-overview.png
 authors: Yian Zhao
+permalink: /blog/2026/unified-cola-en/
 tags:
   - unified multimodal pretraining
   - latent diffusion model
   - flow matching
 ---
-**English** | [中文](./blog_cn.md)
+**English** | [中文]({{ '/blog/2026/unified-cola/' | relative_url }})
 
 # Unified Multimodal Flow Matching with Cola DLM
 
@@ -101,7 +103,7 @@ Thus, the latent variables carry compressed high-level semantics, while the deco
 
 ## 3. Architecture and Training
 
-![**Figure 1.** Unified text--vision modeling with Cola DLM. Left: text continuation and image-conditioned text generation. Middle: text-to-image generation. Right: method overview. Text and visual signals are mapped into continuous latents and modeled by a shared block-causal MMDiT as a joint generative distribution.](./assets/fig-unified-overview.png)
+![**Figure 1.** Unified text--vision modeling with Cola DLM. Left: text continuation and image-conditioned text generation. Middle: text-to-image generation. Right: method overview. Text and visual signals are mapped into continuous latents and modeled by a shared block-causal MMDiT as a joint generative distribution.]({{ '/assets/fig-unified-overview.png' | relative_url }})
 
 The overall architecture is shown on the right of Figure 1. For text and images, it contains the following components:
 
@@ -143,7 +145,7 @@ Within a single forward pass, multiple samples, possibly from different tasks un
 
 The task semantics of the shared block-causal MMDiT are controlled by the attention mask $M_{ij}\in\{0,1\}$, which determines whether query $i$ may attend to key $j$. The mask is defined by the following segment-conditioned rules. **Figure 2** visualizes small rendered examples for each task, with rows as queries and columns as attended keys.
 
-![**Figure 2.** Attention masks of the shared block-causal MMDiT under the three tasks, rendered from the segment-conditioned rules below. Rows are queries and columns are attended keys. Red indicates allowed attention and gray indicates masked positions. The color strips along the top and left encode segment type (green = IT2T instruction segment $\textsf{P}$, blue = clean text, orange = image, purple = noisy text).](./assets/fig-attention-masks.png)
+![**Figure 2.** Attention masks of the shared block-causal MMDiT under the three tasks, rendered from the segment-conditioned rules below. Rows are queries and columns are attended keys. Red indicates allowed attention and gray indicates masked positions. The color strips along the top and left encode segment type (green = IT2T instruction segment $\textsf{P}$, blue = clean text, orange = image, purple = noisy text).]({{ '/assets/fig-attention-masks.png' | relative_url }})
 
 **Text-to-image.** Image generation is conditioned on clean text. We additionally append noisy text to enable multitask training inside a single sequence (T2I + T2T). The attention rule is:
 
@@ -217,235 +219,235 @@ The following carousel shows several single-image samples.
   <div class="sample-track">
     <figure class="sample-slide" id="t2i-sample-1">
       <a class="sample-nav prev" href="#t2i-sample-39" aria-label="Previous sample">‹</a>
-      <img src="./assets/t2i_samples/56.jpg" alt="Text-to-image sample 1" />
+      <img src="{{ '/assets/t2i_samples/56.jpg' | relative_url }}" alt="Text-to-image sample 1" />
       <a class="sample-nav next" href="#t2i-sample-2" aria-label="Next sample">›</a>
       <figcaption>A delicate white dandelion seed head stands above a green meadow, with other soft, blurred flowers nearby. A dark row of trees and a cloudy blue-gray sky give the open field a calm, breezy spring atmosphere.</figcaption>
     </figure>
     <figure class="sample-slide" id="t2i-sample-2">
       <a class="sample-nav prev" href="#t2i-sample-1" aria-label="Previous sample">‹</a>
-      <img src="./assets/t2i_samples/82.jpg" alt="Text-to-image sample 2" />
+      <img src="{{ '/assets/t2i_samples/82.jpg' | relative_url }}" alt="Text-to-image sample 2" />
       <a class="sample-nav next" href="#t2i-sample-3" aria-label="Next sample">›</a>
       <figcaption>Two large abstract paintings dominate a polished interior hallway, their vivid colors contrasting with the neutral wall panels and glossy floor. Ceiling spotlights, patterned rugs, and nearby doorways create the feeling of a private gallery or elegant office space.</figcaption>
     </figure>
     <figure class="sample-slide" id="t2i-sample-3">
       <a class="sample-nav prev" href="#t2i-sample-2" aria-label="Previous sample">‹</a>
-      <img src="./assets/t2i_samples/103.jpg" alt="Text-to-image sample 3" />
+      <img src="{{ '/assets/t2i_samples/103.jpg' | relative_url }}" alt="Text-to-image sample 3" />
       <a class="sample-nav next" href="#t2i-sample-4" aria-label="Next sample">›</a>
       <figcaption>Several boats glide across rippling water during sunset, appearing as dark silhouettes beneath a long arched bridge. The orange sun and its reflection stretch across the river, giving the scene a warm, tranquil waterfront mood.</figcaption>
     </figure>
     <figure class="sample-slide" id="t2i-sample-4">
       <a class="sample-nav prev" href="#t2i-sample-3" aria-label="Previous sample">‹</a>
-      <img src="./assets/t2i_samples/123.jpg" alt="Text-to-image sample 4" />
+      <img src="{{ '/assets/t2i_samples/123.jpg' | relative_url }}" alt="Text-to-image sample 4" />
       <a class="sample-nav next" href="#t2i-sample-5" aria-label="Next sample">›</a>
       <figcaption>White spring blossoms cluster thickly along interwoven tree branches, mixed with small green leaves and unopened buds. The shallow depth of field makes the foreground flowers stand out while the background turns into a delicate canopy of pale bloom.</figcaption>
     </figure>
     <figure class="sample-slide" id="t2i-sample-5">
       <a class="sample-nav prev" href="#t2i-sample-4" aria-label="Previous sample">‹</a>
-      <img src="./assets/t2i_samples/134.jpg" alt="Text-to-image sample 5" />
+      <img src="{{ '/assets/t2i_samples/134.jpg' | relative_url }}" alt="Text-to-image sample 5" />
       <a class="sample-nav next" href="#t2i-sample-6" aria-label="Next sample">›</a>
       <figcaption>Golden sunset light spreads behind a line of dark mountain silhouettes and reflects across the still lake below. Grasses in the foreground add depth, while the mirrored peaks and warm sky create a peaceful landscape composition.</figcaption>
     </figure>
     <figure class="sample-slide" id="t2i-sample-6">
       <a class="sample-nav prev" href="#t2i-sample-5" aria-label="Previous sample">‹</a>
-      <img src="./assets/t2i_samples/280.jpg" alt="Text-to-image sample 6" />
+      <img src="{{ '/assets/t2i_samples/280.jpg' | relative_url }}" alt="Text-to-image sample 6" />
       <a class="sample-nav next" href="#t2i-sample-7" aria-label="Next sample">›</a>
       <figcaption>A broad blue lake stretches toward layered mountains beneath a sweeping sky of textured white clouds. The calm ripples, low dark shorelines, and distant ridges create a cool, expansive landscape with a quiet sense of depth.</figcaption>
     </figure>
     <figure class="sample-slide" id="t2i-sample-7">
       <a class="sample-nav prev" href="#t2i-sample-6" aria-label="Previous sample">‹</a>
-      <img src="./assets/t2i_samples/h1.jpg" alt="Text-to-image sample 7" />
+      <img src="{{ '/assets/t2i_samples/h1.jpg' | relative_url }}" alt="Text-to-image sample 7" />
       <a class="sample-nav next" href="#t2i-sample-8" aria-label="Next sample">›</a>
       <figcaption>A young woman in a white coat and patterned scarf stands at night in front of glowing red and yellow lanterns. The warm lights and wooden structures behind her create a festive, atmospheric portrait with soft contrast.</figcaption>
     </figure>
     <figure class="sample-slide" id="t2i-sample-8">
       <a class="sample-nav prev" href="#t2i-sample-7" aria-label="Previous sample">‹</a>
-      <img src="./assets/t2i_samples/l1.jpg" alt="Text-to-image sample 8" />
+      <img src="{{ '/assets/t2i_samples/l1.jpg' | relative_url }}" alt="Text-to-image sample 8" />
       <a class="sample-nav next" href="#t2i-sample-9" aria-label="Next sample">›</a>
       <figcaption>A monochrome mountain landscape drawing shows steep ridges, deep valleys, winding water, and layered terrain fading into the distance. The sketch-like shading gives the scene a rugged, hand-rendered quality, as if from a travel notebook.</figcaption>
     </figure>
     <figure class="sample-slide" id="t2i-sample-9">
       <a class="sample-nav prev" href="#t2i-sample-8" aria-label="Previous sample">‹</a>
-      <img src="./assets/t2i_samples/67.jpg" alt="Text-to-image sample 9" />
+      <img src="{{ '/assets/t2i_samples/67.jpg' | relative_url }}" alt="Text-to-image sample 9" />
       <a class="sample-nav next" href="#t2i-sample-10" aria-label="Next sample">›</a>
       <figcaption>Tall trees on both sides frame a dramatic sunset sky filled with glowing orange, pale yellow, and blue cloud textures. The dark silhouettes below make the scene feel quiet, spacious, and gently illuminated by evening light.</figcaption>
     </figure>
     <figure class="sample-slide" id="t2i-sample-10">
       <a class="sample-nav prev" href="#t2i-sample-9" aria-label="Previous sample">‹</a>
-      <img src="./assets/t2i_samples/83.jpg" alt="Text-to-image sample 10" />
+      <img src="{{ '/assets/t2i_samples/83.jpg' | relative_url }}" alt="Text-to-image sample 10" />
       <a class="sample-nav next" href="#t2i-sample-11" aria-label="Next sample">›</a>
       <figcaption>A cozy outdoor dining area is lit by a large yellow umbrella and several red hanging lanterns. Wooden tables, simple chairs, and warm pools of light create an intimate evening setting with a festive, traditional atmosphere.</figcaption>
     </figure>
     <figure class="sample-slide" id="t2i-sample-11">
       <a class="sample-nav prev" href="#t2i-sample-10" aria-label="Previous sample">‹</a>
-      <img src="./assets/t2i_samples/86.jpg" alt="Text-to-image sample 11" />
+      <img src="{{ '/assets/t2i_samples/86.jpg' | relative_url }}" alt="Text-to-image sample 11" />
       <a class="sample-nav next" href="#t2i-sample-12" aria-label="Next sample">›</a>
       <figcaption>A dense column of black and gray smoke rises from a rural property near small buildings and scattered trees. The surrounding dirt paths, fields, and pale sky make the sudden fire or burning event feel stark and unsettling.</figcaption>
     </figure>
     <figure class="sample-slide" id="t2i-sample-12">
       <a class="sample-nav prev" href="#t2i-sample-11" aria-label="Previous sample">‹</a>
-      <img src="./assets/t2i_samples/99.jpg" alt="Text-to-image sample 12" />
+      <img src="{{ '/assets/t2i_samples/99.jpg' | relative_url }}" alt="Text-to-image sample 12" />
       <a class="sample-nav next" href="#t2i-sample-13" aria-label="Next sample">›</a>
       <figcaption>A vivid red rose fills the image in extreme close-up, revealing many layered petals curling toward a tight spiral at the center. The blurred green background keeps attention on the flower's saturated color and soft texture.</figcaption>
     </figure>
     <figure class="sample-slide" id="t2i-sample-13">
       <a class="sample-nav prev" href="#t2i-sample-12" aria-label="Previous sample">‹</a>
-      <img src="./assets/t2i_samples/275.jpg" alt="Text-to-image sample 13" />
+      <img src="{{ '/assets/t2i_samples/275.jpg' | relative_url }}" alt="Text-to-image sample 13" />
       <a class="sample-nav next" href="#t2i-sample-14" aria-label="Next sample">›</a>
       <figcaption>A bearded man with curly hair sits indoors wearing a dark blazer and lavender shirt. Warm lamp light, stacks of documents, and framed artwork behind him suggest an office or study, giving the portrait a serious conversational tone.</figcaption>
     </figure>
     <figure class="sample-slide" id="t2i-sample-14">
       <a class="sample-nav prev" href="#t2i-sample-13" aria-label="Previous sample">‹</a>
-      <img src="./assets/t2i_samples/308.jpg" alt="Text-to-image sample 14" />
+      <img src="{{ '/assets/t2i_samples/308.jpg' | relative_url }}" alt="Text-to-image sample 14" />
       <a class="sample-nav next" href="#t2i-sample-15" aria-label="Next sample">›</a>
       <figcaption>A sightseeing boat moves along a wide river in front of grand historic architecture, including ornate towers, stone facades, and decorative rooflines. Reflections shimmer on the water, emphasizing the scale and elegance of the riverside cityscape.</figcaption>
     </figure>
     <figure class="sample-slide" id="t2i-sample-15">
       <a class="sample-nav prev" href="#t2i-sample-14" aria-label="Previous sample">‹</a>
-      <img src="./assets/t2i_samples/323.png" alt="Text-to-image sample 15" />
+      <img src="{{ '/assets/t2i_samples/323.png' | relative_url }}" alt="Text-to-image sample 15" />
       <a class="sample-nav next" href="#t2i-sample-16" aria-label="Next sample">›</a>
       <figcaption>A single leafless tree stands prominently in rolling green grassland, its intricate branches spreading against a bright sky. Distant mountains and soft clouds frame the isolated tree, giving the image a quiet, almost sculptural quality.</figcaption>
     </figure>
     <figure class="sample-slide" id="t2i-sample-16">
       <a class="sample-nav prev" href="#t2i-sample-15" aria-label="Previous sample">‹</a>
-      <img src="./assets/t2i_samples/344.jpg" alt="Text-to-image sample 16" />
+      <img src="{{ '/assets/t2i_samples/344.jpg' | relative_url }}" alt="Text-to-image sample 16" />
       <a class="sample-nav next" href="#t2i-sample-17" aria-label="Next sample">›</a>
       <figcaption>A simple stylized illustration presents a red rose with green leaves, centered inside a rounded purple background with a thick black outline. The bold colors, clean shapes, and cartoon-like linework make the flower feel decorative and playful.</figcaption>
     </figure>
     <figure class="sample-slide" id="t2i-sample-17">
       <a class="sample-nav prev" href="#t2i-sample-16" aria-label="Previous sample">‹</a>
-      <img src="./assets/t2i_samples/411.jpg" alt="Text-to-image sample 17" />
+      <img src="{{ '/assets/t2i_samples/411.jpg' | relative_url }}" alt="Text-to-image sample 17" />
       <a class="sample-nav next" href="#t2i-sample-18" aria-label="Next sample">›</a>
       <figcaption>Bright pink blossoms fill the foreground in dense clusters, their yellow centers catching the light. More branches and flowers blur behind them, creating a saturated spring scene that feels lively, sunny, and full of floral texture.</figcaption>
     </figure>
     <figure class="sample-slide" id="t2i-sample-18">
       <a class="sample-nav prev" href="#t2i-sample-17" aria-label="Previous sample">‹</a>
-      <img src="./assets/t2i_samples/417.jpg" alt="Text-to-image sample 18" />
+      <img src="{{ '/assets/t2i_samples/417.jpg' | relative_url }}" alt="Text-to-image sample 18" />
       <a class="sample-nav next" href="#t2i-sample-19" aria-label="Next sample">›</a>
       <figcaption>A loose navy blue sweater hangs from a wooden hanger against a plain white background. The soft fabric, wide sleeves, and relaxed drape are emphasized by the simple product-style composition and uncluttered studio-like setting.</figcaption>
     </figure>
     <figure class="sample-slide" id="t2i-sample-19">
       <a class="sample-nav prev" href="#t2i-sample-18" aria-label="Previous sample">‹</a>
-      <img src="./assets/t2i_samples/429.jpg" alt="Text-to-image sample 19" />
+      <img src="{{ '/assets/t2i_samples/429.jpg' | relative_url }}" alt="Text-to-image sample 19" />
       <a class="sample-nav next" href="#t2i-sample-20" aria-label="Next sample">›</a>
       <figcaption>A misty mountain rises beyond a quiet lake, its slopes softened by gray haze and overcast light. Reeds in the foreground frame the water, adding depth to the subdued scene and strengthening its calm, contemplative mood.</figcaption>
     </figure>
     <figure class="sample-slide" id="t2i-sample-20">
       <a class="sample-nav prev" href="#t2i-sample-19" aria-label="Previous sample">‹</a>
-      <img src="./assets/t2i_samples/580.jpg" alt="Text-to-image sample 20" />
+      <img src="{{ '/assets/t2i_samples/580.jpg' | relative_url }}" alt="Text-to-image sample 20" />
       <a class="sample-nav next" href="#t2i-sample-21" aria-label="Next sample">›</a>
       <figcaption>A calm lake reflects a bright blue sky and the low green hills beyond the opposite shore. Reeds and leafy plants in the foreground create a natural frame, while distant buildings add a small human presence to the peaceful view.</figcaption>
     </figure>
     <figure class="sample-slide" id="t2i-sample-21">
       <a class="sample-nav prev" href="#t2i-sample-20" aria-label="Previous sample">‹</a>
-      <img src="./assets/t2i_samples/591.jpg" alt="Text-to-image sample 21" />
+      <img src="{{ '/assets/t2i_samples/591.jpg' | relative_url }}" alt="Text-to-image sample 21" />
       <a class="sample-nav next" href="#t2i-sample-22" aria-label="Next sample">›</a>
       <figcaption>A roadside viewpoint looks out across blue ocean water toward distant islands and hazy mountains. Green shrubs, tall grasses, a utility pole, and a small signboard sit beside the path, giving the scenic overlook a casual travel feeling.</figcaption>
     </figure>
     <figure class="sample-slide" id="t2i-sample-22">
       <a class="sample-nav prev" href="#t2i-sample-21" aria-label="Previous sample">‹</a>
-      <img src="./assets/t2i_samples/641.jpg" alt="Text-to-image sample 22" />
+      <img src="{{ '/assets/t2i_samples/641.jpg' | relative_url }}" alt="Text-to-image sample 22" />
       <a class="sample-nav next" href="#t2i-sample-23" aria-label="Next sample">›</a>
       <figcaption>A cup of foamy coffee sits beside fried pastries sprinkled with powdered sugar on brown paper. The colorful table covering, golden snacks, and creamy drink create a cheerful cafe or street-food scene focused on sweet comfort food.</figcaption>
     </figure>
     <figure class="sample-slide" id="t2i-sample-23">
       <a class="sample-nav prev" href="#t2i-sample-22" aria-label="Previous sample">‹</a>
-      <img src="./assets/t2i_samples/689.jpeg" alt="Text-to-image sample 23" />
+      <img src="{{ '/assets/t2i_samples/689.jpeg' | relative_url }}" alt="Text-to-image sample 23" />
       <a class="sample-nav next" href="#t2i-sample-24" aria-label="Next sample">›</a>
       <figcaption>Heavy gray storm clouds gather low over city buildings, power lines, and rooftops, filling most of the frame with dark, textured sky. The urban skyline beneath looks small and tense, suggesting an approaching downpour or dramatic weather change.</figcaption>
     </figure>
     <figure class="sample-slide" id="t2i-sample-24">
       <a class="sample-nav prev" href="#t2i-sample-23" aria-label="Previous sample">‹</a>
-      <img src="./assets/t2i_samples/696.jpg" alt="Text-to-image sample 24" />
+      <img src="{{ '/assets/t2i_samples/696.jpg' | relative_url }}" alt="Text-to-image sample 24" />
       <a class="sample-nav next" href="#t2i-sample-25" aria-label="Next sample">›</a>
       <figcaption>A large steamed dumpling or bun rests on a round wooden plate, garnished with lettuce and small red tomatoes. The bright tabletop, folded cloth, and clean plating make the simple food presentation look fresh and carefully arranged.</figcaption>
     </figure>
     <figure class="sample-slide" id="t2i-sample-25">
       <a class="sample-nav prev" href="#t2i-sample-24" aria-label="Previous sample">‹</a>
-      <img src="./assets/t2i_samples/721.jpg" alt="Text-to-image sample 25" />
+      <img src="{{ '/assets/t2i_samples/721.jpg' | relative_url }}" alt="Text-to-image sample 25" />
       <a class="sample-nav next" href="#t2i-sample-26" aria-label="Next sample">›</a>
       <figcaption>A sculptural bust shows a realistic human face emerging from a rough, crown-like form and textured reddish base. The plain wall behind it keeps focus on the unusual material contrast, facial detail, and handmade artistic expression.</figcaption>
     </figure>
     <figure class="sample-slide" id="t2i-sample-26">
       <a class="sample-nav prev" href="#t2i-sample-25" aria-label="Previous sample">‹</a>
-      <img src="./assets/t2i_samples/760.jpg" alt="Text-to-image sample 26" />
+      <img src="{{ '/assets/t2i_samples/760.jpg' | relative_url }}" alt="Text-to-image sample 26" />
       <a class="sample-nav next" href="#t2i-sample-27" aria-label="Next sample">›</a>
       <figcaption>A round celebration cake is decorated with pink frosting roses, green leaves, and a large bow across the top. Plates of food around it suggest a shared meal, while the elaborate icing makes the cake the table's centerpiece.</figcaption>
     </figure>
     <figure class="sample-slide" id="t2i-sample-27">
       <a class="sample-nav prev" href="#t2i-sample-26" aria-label="Previous sample">‹</a>
-      <img src="./assets/t2i_samples/765.jpg" alt="Text-to-image sample 27" />
+      <img src="{{ '/assets/t2i_samples/765.jpg' | relative_url }}" alt="Text-to-image sample 27" />
       <a class="sample-nav next" href="#t2i-sample-28" aria-label="Next sample">›</a>
       <figcaption>Rows of grilled skewers are packed tightly on a metal tray, coated in glossy red seasoning, herbs, and chili flakes. The close-up view highlights the rich sauce, charred edges, and spicy street-food appeal of the dish.</figcaption>
     </figure>
     <figure class="sample-slide" id="t2i-sample-28">
       <a class="sample-nav prev" href="#t2i-sample-27" aria-label="Previous sample">‹</a>
-      <img src="./assets/t2i_samples/807.jpg" alt="Text-to-image sample 28" />
+      <img src="{{ '/assets/t2i_samples/807.jpg' | relative_url }}" alt="Text-to-image sample 28" />
       <a class="sample-nav next" href="#t2i-sample-29" aria-label="Next sample">›</a>
       <figcaption>Thick steam rises from a large pot filled with stew, meat, vegetables, and rich brown broth. The close view captures active cooking, with bubbling liquid and softened ingredients creating a hot, hearty, and aromatic kitchen scene.</figcaption>
     </figure>
     <figure class="sample-slide" id="t2i-sample-29">
       <a class="sample-nav prev" href="#t2i-sample-28" aria-label="Previous sample">‹</a>
-      <img src="./assets/t2i_samples/808.jpg" alt="Text-to-image sample 29" />
+      <img src="{{ '/assets/t2i_samples/808.jpg' | relative_url }}" alt="Text-to-image sample 29" />
       <a class="sample-nav next" href="#t2i-sample-30" aria-label="Next sample">›</a>
       <figcaption>Small white flowers bloom in dense clusters among glossy green leaves, with many speckled petals and unopened buds visible. The close-up composition emphasizes delicate natural patterns, soft lighting, and the fresh detail of the flowering plant.</figcaption>
     </figure>
     <figure class="sample-slide" id="t2i-sample-30">
       <a class="sample-nav prev" href="#t2i-sample-29" aria-label="Previous sample">‹</a>
-      <img src="./assets/t2i_samples/850.jpg" alt="Text-to-image sample 30" />
+      <img src="{{ '/assets/t2i_samples/850.jpg' | relative_url }}" alt="Text-to-image sample 30" />
       <a class="sample-nav next" href="#t2i-sample-31" aria-label="Next sample">›</a>
       <figcaption>A brilliant sun shines above a winding mountain road bordered by lush green plants. Distant ridges fade toward the blue horizon, while the intense light and clear sky create a bright, open, high-altitude travel scene.</figcaption>
     </figure>
     <figure class="sample-slide" id="t2i-sample-31">
       <a class="sample-nav prev" href="#t2i-sample-30" aria-label="Previous sample">‹</a>
-      <img src="./assets/t2i_samples/884.jpg" alt="Text-to-image sample 31" />
+      <img src="{{ '/assets/t2i_samples/884.jpg' | relative_url }}" alt="Text-to-image sample 31" />
       <a class="sample-nav next" href="#t2i-sample-32" aria-label="Next sample">›</a>
       <figcaption>A vivid red boat rests on pale sand in front of calm turquoise water and a clear horizon. The simple composition emphasizes strong color contrast, seaside quietness, and the unusual stillness of a boat pulled ashore.</figcaption>
     </figure>
     <figure class="sample-slide" id="t2i-sample-32">
       <a class="sample-nav prev" href="#t2i-sample-31" aria-label="Previous sample">‹</a>
-      <img src="./assets/t2i_samples/h2.jpg" alt="Text-to-image sample 32" />
+      <img src="{{ '/assets/t2i_samples/h2.jpg' | relative_url }}" alt="Text-to-image sample 32" />
       <a class="sample-nav next" href="#t2i-sample-33" aria-label="Next sample">›</a>
       <figcaption>A man in a gray polo shirt stands on a balcony or rooftop, looking thoughtfully to the side. A blurred city skyline behind him gives the portrait an urban setting and a calm, reflective mood.</figcaption>
     </figure>
     <figure class="sample-slide" id="t2i-sample-33">
       <a class="sample-nav prev" href="#t2i-sample-32" aria-label="Previous sample">‹</a>
-      <img src="./assets/t2i_samples/h4.jpg" alt="Text-to-image sample 33" />
+      <img src="{{ '/assets/t2i_samples/h4.jpg' | relative_url }}" alt="Text-to-image sample 33" />
       <a class="sample-nav next" href="#t2i-sample-34" aria-label="Next sample">›</a>
       <figcaption>A close selfie shows a man wearing a dark bucket hat and light blue shirt while seated inside a vehicle. Black seats, side windows, and an orange curtain provide context for the casual travel setting.</figcaption>
     </figure>
     <figure class="sample-slide" id="t2i-sample-34">
       <a class="sample-nav prev" href="#t2i-sample-33" aria-label="Previous sample">‹</a>
-      <img src="./assets/t2i_samples/h5.jpg" alt="Text-to-image sample 34" />
+      <img src="{{ '/assets/t2i_samples/h5.jpg' | relative_url }}" alt="Text-to-image sample 34" />
       <a class="sample-nav next" href="#t2i-sample-35" aria-label="Next sample">›</a>
       <figcaption>An anime-style girl with long dark hair wears a purple patterned outfit with lace details, posed against a dreamy sky. Large moonlike circles, stars, and soft gradients create a romantic fantasy illustration style.</figcaption>
     </figure>
     <figure class="sample-slide" id="t2i-sample-35">
       <a class="sample-nav prev" href="#t2i-sample-34" aria-label="Previous sample">‹</a>
-      <img src="./assets/t2i_samples/h6.jpg" alt="Text-to-image sample 35" />
+      <img src="{{ '/assets/t2i_samples/h6.jpg' | relative_url }}" alt="Text-to-image sample 35" />
       <a class="sample-nav next" href="#t2i-sample-36" aria-label="Next sample">›</a>
       <figcaption>A woman with curly hair smiles gently in a very dark outdoor setting, lit softly from the front. The nearly black background isolates her face and shoulders, creating an intimate portrait with understated nighttime atmosphere.</figcaption>
     </figure>
     <figure class="sample-slide" id="t2i-sample-36">
       <a class="sample-nav prev" href="#t2i-sample-35" aria-label="Previous sample">‹</a>
-      <img src="./assets/t2i_samples/h7.jpg" alt="Text-to-image sample 36" />
+      <img src="{{ '/assets/t2i_samples/h7.jpg' | relative_url }}" alt="Text-to-image sample 36" />
       <a class="sample-nav next" href="#t2i-sample-37" aria-label="Next sample">›</a>
       <figcaption>Two men in gray shirts stand shoulder to shoulder in front of a green screen. One smiles broadly while the other gives a restrained expression, creating a casual studio portrait with contrasting personalities.</figcaption>
     </figure>
     <figure class="sample-slide" id="t2i-sample-37">
       <a class="sample-nav prev" href="#t2i-sample-36" aria-label="Previous sample">‹</a>
-      <img src="./assets/t2i_samples/h8.jpg" alt="Text-to-image sample 37" />
+      <img src="{{ '/assets/t2i_samples/h8.jpg' | relative_url }}" alt="Text-to-image sample 37" />
       <a class="sample-nav next" href="#t2i-sample-38" aria-label="Next sample">›</a>
       <figcaption>Two adults sit at a restaurant table behind a birthday cake topped with lit candles. Warm indoor lighting, surrounding dishes, cups, and desserts suggest a celebratory meal shared in a relaxed dining setting.</figcaption>
     </figure>
     <figure class="sample-slide" id="t2i-sample-38">
       <a class="sample-nav prev" href="#t2i-sample-37" aria-label="Previous sample">‹</a>
-      <img src="./assets/t2i_samples/h9.jpg" alt="Text-to-image sample 38" />
+      <img src="{{ '/assets/t2i_samples/h9.jpg' | relative_url }}" alt="Text-to-image sample 38" />
       <a class="sample-nav next" href="#t2i-sample-39" aria-label="Next sample">›</a>
       <figcaption>A fluffy white cat sits indoors with wide dark eyes, pink ears, and crossed front paws. The softly blurred background and centered framing make the cat's round face and clean white fur especially prominent.</figcaption>
     </figure>
     <figure class="sample-slide" id="t2i-sample-39">
       <a class="sample-nav prev" href="#t2i-sample-38" aria-label="Previous sample">‹</a>
-      <img src="./assets/t2i_samples/h10.jpg" alt="Text-to-image sample 39" />
+      <img src="{{ '/assets/t2i_samples/h10.jpg' | relative_url }}" alt="Text-to-image sample 39" />
       <a class="sample-nav next" href="#t2i-sample-1" aria-label="Next sample">›</a>
       <figcaption>Two young women in coordinated school-style outfits with red bows take a close selfie outdoors. Trees, bicycles, and paved walkways in the background suggest a campus or park setting on a bright day.</figcaption>
     </figure>
@@ -501,217 +503,217 @@ After training on about **5M** image-text pairs, the model shows preliminary ima
   <div class="sample-track">
     <figure class="sample-slide" id="it2t-sample-1">
       <a class="sample-nav prev" href="#it2t-sample-36" aria-label="Previous sample">‹</a>
-      <img src="./assets/it2t_samples/8.png" alt="Image-conditioned text generation sample 1" />
+      <img src="{{ '/assets/it2t_samples/8.png' | relative_url }}" alt="Image-conditioned text generation sample 1" />
       <a class="sample-nav next" href="#it2t-sample-2" aria-label="Next sample">›</a>
       <figcaption><strong>Prompt:</strong> Describe the content of this image in detail.<br /><strong>Output:</strong> The image shows a woman wearing an oversized long down jacket with a plain collar. The jacket features a letter ``A'' design on it.</figcaption>
     </figure>
     <figure class="sample-slide" id="it2t-sample-2">
       <a class="sample-nav prev" href="#it2t-sample-1" aria-label="Previous sample">‹</a>
-      <img src="./assets/it2t_samples/11.png" alt="Image-conditioned text generation sample 2" />
+      <img src="{{ '/assets/it2t_samples/11.png' | relative_url }}" alt="Image-conditioned text generation sample 2" />
       <a class="sample-nav next" href="#it2t-sample-3" aria-label="Next sample">›</a>
       <figcaption><strong>Prompt:</strong> Describe the content of this image in detail.<br /><strong>Output:</strong> The image shows a person wearing a black jacket and sunglasses, standing on a street.</figcaption>
     </figure>
     <figure class="sample-slide" id="it2t-sample-3">
       <a class="sample-nav prev" href="#it2t-sample-2" aria-label="Previous sample">‹</a>
-      <img src="./assets/it2t_samples/54.png" alt="Image-conditioned text generation sample 3" />
+      <img src="{{ '/assets/it2t_samples/54.png' | relative_url }}" alt="Image-conditioned text generation sample 3" />
       <a class="sample-nav next" href="#it2t-sample-4" aria-label="Next sample">›</a>
       <figcaption><strong>Prompt:</strong> Describe the content of this image in detail.<br /><strong>Output:</strong> The image shows a meeting room with several people, around six to eight, sitting around a long conference table and holding a meeting. A screen is mounted on the wall, and bowls, cups, and pens are placed on the table.</figcaption>
     </figure>
     <figure class="sample-slide" id="it2t-sample-4">
       <a class="sample-nav prev" href="#it2t-sample-3" aria-label="Previous sample">‹</a>
-      <img src="./assets/it2t_samples/57.png" alt="Image-conditioned text generation sample 4" />
+      <img src="{{ '/assets/it2t_samples/57.png' | relative_url }}" alt="Image-conditioned text generation sample 4" />
       <a class="sample-nav next" href="#it2t-sample-5" aria-label="Next sample">›</a>
       <figcaption><strong>Prompt:</strong> Describe the content of this image in detail.<br /><strong>Output:</strong> The image shows a person wearing a grey hoodie with a purple design on the front. The background includes a white wall with a blue design.</figcaption>
     </figure>
     <figure class="sample-slide" id="it2t-sample-5">
       <a class="sample-nav prev" href="#it2t-sample-4" aria-label="Previous sample">‹</a>
-      <img src="./assets/it2t_samples/58.png" alt="Image-conditioned text generation sample 5" />
+      <img src="{{ '/assets/it2t_samples/58.png' | relative_url }}" alt="Image-conditioned text generation sample 5" />
       <a class="sample-nav next" href="#it2t-sample-6" aria-label="Next sample">›</a>
       <figcaption><strong>Prompt:</strong> Describe the content of this image in detail.<br /><strong>Output:</strong> The image shows several people playing a ball game on a court. The background includes a blue wall with some text, and the ground is also blue.</figcaption>
     </figure>
     <figure class="sample-slide" id="it2t-sample-6">
       <a class="sample-nav prev" href="#it2t-sample-5" aria-label="Previous sample">‹</a>
-      <img src="./assets/it2t_samples/59.png" alt="Image-conditioned text generation sample 6" />
+      <img src="{{ '/assets/it2t_samples/59.png' | relative_url }}" alt="Image-conditioned text generation sample 6" />
       <a class="sample-nav next" href="#it2t-sample-7" aria-label="Next sample">›</a>
       <figcaption><strong>Prompt:</strong> Describe the content of this image in detail.<br /><strong>Output:</strong> The image shows a person wearing a black suit with a white shirt underneath, seated.</figcaption>
     </figure>
     <figure class="sample-slide" id="it2t-sample-7">
       <a class="sample-nav prev" href="#it2t-sample-6" aria-label="Previous sample">‹</a>
-      <img src="./assets/it2t_samples/60.png" alt="Image-conditioned text generation sample 7" />
+      <img src="{{ '/assets/it2t_samples/60.png' | relative_url }}" alt="Image-conditioned text generation sample 7" />
       <a class="sample-nav next" href="#it2t-sample-8" aria-label="Next sample">›</a>
       <figcaption><strong>Prompt:</strong> Describe the content of this image in detail.<br /><strong>Output:</strong> The image shows a cluster of ancient buildings with old-style architecture, featuring several old structures packed closely together.</figcaption>
     </figure>
     <figure class="sample-slide" id="it2t-sample-8">
       <a class="sample-nav prev" href="#it2t-sample-7" aria-label="Previous sample">‹</a>
-      <img src="./assets/it2t_samples/61.png" alt="Image-conditioned text generation sample 8" />
+      <img src="{{ '/assets/it2t_samples/61.png' | relative_url }}" alt="Image-conditioned text generation sample 8" />
       <a class="sample-nav next" href="#it2t-sample-9" aria-label="Next sample">›</a>
       <figcaption><strong>Prompt:</strong> Describe the content of this image in detail.<br /><strong>Output:</strong> The image is a cityscape shot at dusk, showing an urban night scene with many tall high-rise buildings.</figcaption>
     </figure>
     <figure class="sample-slide" id="it2t-sample-9">
       <a class="sample-nav prev" href="#it2t-sample-8" aria-label="Previous sample">‹</a>
-      <img src="./assets/it2t_samples/84.png" alt="Image-conditioned text generation sample 9" />
+      <img src="{{ '/assets/it2t_samples/84.png' | relative_url }}" alt="Image-conditioned text generation sample 9" />
       <a class="sample-nav next" href="#it2t-sample-10" aria-label="Next sample">›</a>
       <figcaption><strong>Prompt:</strong> Describe the content of this image in detail.<br /><strong>Output:</strong> The image shows a large football (soccer) stadium with the field inside, resembling an outdoor stadium. Another row of stands is visible on the other side of the field.</figcaption>
     </figure>
     <figure class="sample-slide" id="it2t-sample-10">
       <a class="sample-nav prev" href="#it2t-sample-9" aria-label="Previous sample">‹</a>
-      <img src="./assets/it2t_samples/89.png" alt="Image-conditioned text generation sample 10" />
+      <img src="{{ '/assets/it2t_samples/89.png' | relative_url }}" alt="Image-conditioned text generation sample 10" />
       <a class="sample-nav next" href="#it2t-sample-11" aria-label="Next sample">›</a>
       <figcaption><strong>Prompt:</strong> Describe the content of this image in detail.<br /><strong>Output:</strong> The image shows a person using a pen to write on a piece of paper.</figcaption>
     </figure>
     <figure class="sample-slide" id="it2t-sample-11">
       <a class="sample-nav prev" href="#it2t-sample-10" aria-label="Previous sample">‹</a>
-      <img src="./assets/it2t_samples/12.png" alt="Image-conditioned text generation sample 11" />
+      <img src="{{ '/assets/it2t_samples/12.png' | relative_url }}" alt="Image-conditioned text generation sample 11" />
       <a class="sample-nav next" href="#it2t-sample-12" aria-label="Next sample">›</a>
       <figcaption><strong>Prompt:</strong> What does this image depict? Give a comprehensive description.<br /><strong>Output:</strong> The image shows a woman with long, dark hair wearing a black top. The background is a neutral color, with a window and a pink wall visible behind her. She appears to be standing indoors.</figcaption>
     </figure>
     <figure class="sample-slide" id="it2t-sample-12">
       <a class="sample-nav prev" href="#it2t-sample-11" aria-label="Previous sample">‹</a>
-      <img src="./assets/it2t_samples/13.png" alt="Image-conditioned text generation sample 12" />
+      <img src="{{ '/assets/it2t_samples/13.png' | relative_url }}" alt="Image-conditioned text generation sample 12" />
       <a class="sample-nav next" href="#it2t-sample-13" aria-label="Next sample">›</a>
       <figcaption><strong>Prompt:</strong> What does this image depict? Give a comprehensive description.<br /><strong>Output:</strong> The image shows a portrait of a young woman with blonde hair, wearing a white top and seated at a student desk with an open laptop. She appears to be speaking while using the laptop.</figcaption>
     </figure>
     <figure class="sample-slide" id="it2t-sample-13">
       <a class="sample-nav prev" href="#it2t-sample-12" aria-label="Previous sample">‹</a>
-      <img src="./assets/it2t_samples/15.png" alt="Image-conditioned text generation sample 13" />
+      <img src="{{ '/assets/it2t_samples/15.png' | relative_url }}" alt="Image-conditioned text generation sample 13" />
       <a class="sample-nav next" href="#it2t-sample-14" aria-label="Next sample">›</a>
       <figcaption><strong>Prompt:</strong> What does this image depict? Give a comprehensive description.<br /><strong>Output:</strong> The image shows a gravestone with English text carved on it.</figcaption>
     </figure>
     <figure class="sample-slide" id="it2t-sample-14">
       <a class="sample-nav prev" href="#it2t-sample-13" aria-label="Previous sample">‹</a>
-      <img src="./assets/it2t_samples/36.png" alt="Image-conditioned text generation sample 14" />
+      <img src="{{ '/assets/it2t_samples/36.png' | relative_url }}" alt="Image-conditioned text generation sample 14" />
       <a class="sample-nav next" href="#it2t-sample-15" aria-label="Next sample">›</a>
       <figcaption><strong>Prompt:</strong> What is shown in this image? Please explain thoroughly.<br /><strong>Output:</strong> The image shows a cluster of modern city buildings, including tall skyscrapers with distinctive and futuristic architectural designs.</figcaption>
     </figure>
     <figure class="sample-slide" id="it2t-sample-15">
       <a class="sample-nav prev" href="#it2t-sample-14" aria-label="Previous sample">‹</a>
-      <img src="./assets/it2t_samples/43.png" alt="Image-conditioned text generation sample 15" />
+      <img src="{{ '/assets/it2t_samples/43.png' | relative_url }}" alt="Image-conditioned text generation sample 15" />
       <a class="sample-nav next" href="#it2t-sample-16" aria-label="Next sample">›</a>
       <figcaption><strong>Prompt:</strong> What is shown in this image? Please explain thoroughly.<br /><strong>Output:</strong> The image is a medium shot of a young East Asian woman with long, straight dark hair, wearing a pink top and a necklace. She is posing with her hands raised near her face, making a gesture with her fingers.</figcaption>
     </figure>
     <figure class="sample-slide" id="it2t-sample-16">
       <a class="sample-nav prev" href="#it2t-sample-15" aria-label="Previous sample">‹</a>
-      <img src="./assets/it2t_samples/44.png" alt="Image-conditioned text generation sample 16" />
+      <img src="{{ '/assets/it2t_samples/44.png' | relative_url }}" alt="Image-conditioned text generation sample 16" />
       <a class="sample-nav next" href="#it2t-sample-17" aria-label="Next sample">›</a>
       <figcaption><strong>Prompt:</strong> What is shown in this image? Please explain thoroughly.<br /><strong>Output:</strong> The image shows a blue card or cover with a printed image and some text on it.</figcaption>
     </figure>
     <figure class="sample-slide" id="it2t-sample-17">
       <a class="sample-nav prev" href="#it2t-sample-16" aria-label="Previous sample">‹</a>
-      <img src="./assets/it2t_samples/46.png" alt="Image-conditioned text generation sample 17" />
+      <img src="{{ '/assets/it2t_samples/46.png' | relative_url }}" alt="Image-conditioned text generation sample 17" />
       <a class="sample-nav next" href="#it2t-sample-18" aria-label="Next sample">›</a>
       <figcaption><strong>Prompt:</strong> What is shown in this image? Please explain thoroughly.<br /><strong>Output:</strong> The image shows three people standing in an open outdoor area. They are wearing colored clothing, and one of them appears to be carrying something on their back.</figcaption>
     </figure>
     <figure class="sample-slide" id="it2t-sample-18">
       <a class="sample-nav prev" href="#it2t-sample-17" aria-label="Previous sample">‹</a>
-      <img src="./assets/it2t_samples/67.png" alt="Image-conditioned text generation sample 18" />
+      <img src="{{ '/assets/it2t_samples/67.png' | relative_url }}" alt="Image-conditioned text generation sample 18" />
       <a class="sample-nav next" href="#it2t-sample-19" aria-label="Next sample">›</a>
       <figcaption><strong>Prompt:</strong> What is shown in this image? Please explain thoroughly.<br /><strong>Output:</strong> The image shows a mountain range with a massive peak. The surface of the mountain reveals distinctive textures and patterns.</figcaption>
     </figure>
     <figure class="sample-slide" id="it2t-sample-19">
       <a class="sample-nav prev" href="#it2t-sample-18" aria-label="Previous sample">‹</a>
-      <img src="./assets/it2t_samples/68.png" alt="Image-conditioned text generation sample 19" />
+      <img src="{{ '/assets/it2t_samples/68.png' | relative_url }}" alt="Image-conditioned text generation sample 19" />
       <a class="sample-nav next" href="#it2t-sample-20" aria-label="Next sample">›</a>
       <figcaption><strong>Prompt:</strong> What is shown in this image? Please explain thoroughly.<br /><strong>Output:</strong> The image shows a man wearing a plaid shirt, working in a studio or workshop. He is focused on an object on a white surface in front of him.</figcaption>
     </figure>
     <figure class="sample-slide" id="it2t-sample-20">
       <a class="sample-nav prev" href="#it2t-sample-19" aria-label="Previous sample">‹</a>
-      <img src="./assets/it2t_samples/69.png" alt="Image-conditioned text generation sample 20" />
+      <img src="{{ '/assets/it2t_samples/69.png' | relative_url }}" alt="Image-conditioned text generation sample 20" />
       <a class="sample-nav next" href="#it2t-sample-21" aria-label="Next sample">›</a>
       <figcaption><strong>Prompt:</strong> What is shown in this image? Please explain thoroughly.<br /><strong>Output:</strong> The image shows a newlywed couple at a wedding, dressed in wedding attire.</figcaption>
     </figure>
     <figure class="sample-slide" id="it2t-sample-21">
       <a class="sample-nav prev" href="#it2t-sample-20" aria-label="Previous sample">‹</a>
-      <img src="./assets/it2t_samples/70.png" alt="Image-conditioned text generation sample 21" />
+      <img src="{{ '/assets/it2t_samples/70.png' | relative_url }}" alt="Image-conditioned text generation sample 21" />
       <a class="sample-nav next" href="#it2t-sample-22" aria-label="Next sample">›</a>
       <figcaption><strong>Prompt:</strong> What is shown in this image? Please explain thoroughly.<br /><strong>Output:</strong> The image is a cartoon-style drawing of a character dressed in a colored outfit, with a body showing green and yellow stripes. The character is touching its face with one hand.</figcaption>
     </figure>
     <figure class="sample-slide" id="it2t-sample-22">
       <a class="sample-nav prev" href="#it2t-sample-21" aria-label="Previous sample">‹</a>
-      <img src="./assets/it2t_samples/26.png" alt="Image-conditioned text generation sample 22" />
+      <img src="{{ '/assets/it2t_samples/26.png' | relative_url }}" alt="Image-conditioned text generation sample 22" />
       <a class="sample-nav next" href="#it2t-sample-23" aria-label="Next sample">›</a>
       <figcaption><strong>Prompt:</strong> Describe what you see in this picture.<br /><strong>Output:</strong> The image shows musicians performing with instruments at a ceremony. The background includes a floor and a wall.</figcaption>
     </figure>
     <figure class="sample-slide" id="it2t-sample-23">
       <a class="sample-nav prev" href="#it2t-sample-22" aria-label="Previous sample">‹</a>
-      <img src="./assets/it2t_samples/74.png" alt="Image-conditioned text generation sample 23" />
+      <img src="{{ '/assets/it2t_samples/74.png' | relative_url }}" alt="Image-conditioned text generation sample 23" />
       <a class="sample-nav next" href="#it2t-sample-24" aria-label="Next sample">›</a>
       <figcaption><strong>Prompt:</strong> Describe what you see in this picture.<br /><strong>Output:</strong> The image shows a black sleeveless T-shirt with a printed design on the front.</figcaption>
     </figure>
     <figure class="sample-slide" id="it2t-sample-24">
       <a class="sample-nav prev" href="#it2t-sample-23" aria-label="Previous sample">‹</a>
-      <img src="./assets/it2t_samples/75.png" alt="Image-conditioned text generation sample 24" />
+      <img src="{{ '/assets/it2t_samples/75.png' | relative_url }}" alt="Image-conditioned text generation sample 24" />
       <a class="sample-nav next" href="#it2t-sample-25" aria-label="Next sample">›</a>
       <figcaption><strong>Prompt:</strong> Describe what you see in this picture.<br /><strong>Output:</strong> The image shows a person wearing a white blouse over a black and white striped skirt.</figcaption>
     </figure>
     <figure class="sample-slide" id="it2t-sample-25">
       <a class="sample-nav prev" href="#it2t-sample-24" aria-label="Previous sample">‹</a>
-      <img src="./assets/it2t_samples/78.png" alt="Image-conditioned text generation sample 25" />
+      <img src="{{ '/assets/it2t_samples/78.png' | relative_url }}" alt="Image-conditioned text generation sample 25" />
       <a class="sample-nav next" href="#it2t-sample-26" aria-label="Next sample">›</a>
       <figcaption><strong>Prompt:</strong> Describe what you see in this picture.<br /><strong>Output:</strong> The image shows a white Toyota car with a sleek design, featuring prominent front and side headlights.</figcaption>
     </figure>
     <figure class="sample-slide" id="it2t-sample-26">
       <a class="sample-nav prev" href="#it2t-sample-25" aria-label="Previous sample">‹</a>
-      <img src="./assets/it2t_samples/79.png" alt="Image-conditioned text generation sample 26" />
+      <img src="{{ '/assets/it2t_samples/79.png' | relative_url }}" alt="Image-conditioned text generation sample 26" />
       <a class="sample-nav next" href="#it2t-sample-27" aria-label="Next sample">›</a>
       <figcaption><strong>Prompt:</strong> Describe what you see in this picture.<br /><strong>Output:</strong> The image shows a man wearing a black baseball cap and a grey shirt. The focus is on the cap, and the background is a plain, neutral grey.</figcaption>
     </figure>
     <figure class="sample-slide" id="it2t-sample-27">
       <a class="sample-nav prev" href="#it2t-sample-26" aria-label="Previous sample">‹</a>
-      <img src="./assets/it2t_samples/80.png" alt="Image-conditioned text generation sample 27" />
+      <img src="{{ '/assets/it2t_samples/80.png' | relative_url }}" alt="Image-conditioned text generation sample 27" />
       <a class="sample-nav next" href="#it2t-sample-28" aria-label="Next sample">›</a>
       <figcaption><strong>Prompt:</strong> Describe what you see in this picture.<br /><strong>Output:</strong> The image shows a necklace with a red, ball-shaped pendant.</figcaption>
     </figure>
     <figure class="sample-slide" id="it2t-sample-28">
       <a class="sample-nav prev" href="#it2t-sample-27" aria-label="Previous sample">‹</a>
-      <img src="./assets/it2t_samples/81.png" alt="Image-conditioned text generation sample 28" />
+      <img src="{{ '/assets/it2t_samples/81.png' | relative_url }}" alt="Image-conditioned text generation sample 28" />
       <a class="sample-nav next" href="#it2t-sample-29" aria-label="Next sample">›</a>
       <figcaption><strong>Prompt:</strong> Describe what you see in this picture.<br /><strong>Output:</strong> The image shows a person standing on a paved area with a scenic green backdrop.</figcaption>
     </figure>
     <figure class="sample-slide" id="it2t-sample-29">
       <a class="sample-nav prev" href="#it2t-sample-28" aria-label="Previous sample">‹</a>
-      <img src="./assets/it2t_samples/90.png" alt="Image-conditioned text generation sample 29" />
+      <img src="{{ '/assets/it2t_samples/90.png' | relative_url }}" alt="Image-conditioned text generation sample 29" />
       <a class="sample-nav next" href="#it2t-sample-30" aria-label="Next sample">›</a>
       <figcaption><strong>Prompt:</strong> Describe what you see in this picture.<br /><strong>Output:</strong> The image shows an old building with distinctive traditional Chinese-style architecture. It features traditional entrance details, and an iron structure with a roof is visible above the building.</figcaption>
     </figure>
     <figure class="sample-slide" id="it2t-sample-30">
       <a class="sample-nav prev" href="#it2t-sample-29" aria-label="Previous sample">‹</a>
-      <img src="./assets/it2t_samples/91.png" alt="Image-conditioned text generation sample 30" />
+      <img src="{{ '/assets/it2t_samples/91.png' | relative_url }}" alt="Image-conditioned text generation sample 30" />
       <a class="sample-nav next" href="#it2t-sample-31" aria-label="Next sample">›</a>
       <figcaption><strong>Prompt:</strong> Describe what you see in this picture.<br /><strong>Output:</strong> The image shows a decorative ornament in the shape of a flower.</figcaption>
     </figure>
     <figure class="sample-slide" id="it2t-sample-31">
       <a class="sample-nav prev" href="#it2t-sample-30" aria-label="Previous sample">‹</a>
-      <img src="./assets/it2t_samples/94.png" alt="Image-conditioned text generation sample 31" />
+      <img src="{{ '/assets/it2t_samples/94.png' | relative_url }}" alt="Image-conditioned text generation sample 31" />
       <a class="sample-nav next" href="#it2t-sample-32" aria-label="Next sample">›</a>
       <figcaption><strong>Prompt:</strong> Describe what you see in this picture.<br /><strong>Output:</strong> The image shows several people playing volleyball, with one of them jumping up. The scene takes place under a clear afternoon sky.</figcaption>
     </figure>
     <figure class="sample-slide" id="it2t-sample-32">
       <a class="sample-nav prev" href="#it2t-sample-31" aria-label="Previous sample">‹</a>
-      <img src="./assets/it2t_samples/48.png" alt="Image-conditioned text generation sample 32" />
+      <img src="{{ '/assets/it2t_samples/48.png' | relative_url }}" alt="Image-conditioned text generation sample 32" />
       <a class="sample-nav next" href="#it2t-sample-33" aria-label="Next sample">›</a>
       <figcaption><strong>Prompt:</strong> Generate a detailed caption for this image.<br /><strong>Output:</strong> The image shows a soccer player in action during a match, wearing a numbered uniform. The player appears to be running and kicking the ball on the field.</figcaption>
     </figure>
     <figure class="sample-slide" id="it2t-sample-33">
       <a class="sample-nav prev" href="#it2t-sample-32" aria-label="Previous sample">‹</a>
-      <img src="./assets/it2t_samples/50.png" alt="Image-conditioned text generation sample 33" />
+      <img src="{{ '/assets/it2t_samples/50.png' | relative_url }}" alt="Image-conditioned text generation sample 33" />
       <a class="sample-nav next" href="#it2t-sample-34" aria-label="Next sample">›</a>
       <figcaption><strong>Prompt:</strong> Generate a detailed caption for this image.<br /><strong>Output:</strong> The image shows a black T-shirt with a design featuring a blue cat printed on the front.</figcaption>
     </figure>
     <figure class="sample-slide" id="it2t-sample-34">
       <a class="sample-nav prev" href="#it2t-sample-33" aria-label="Previous sample">‹</a>
-      <img src="./assets/it2t_samples/51.png" alt="Image-conditioned text generation sample 34" />
+      <img src="{{ '/assets/it2t_samples/51.png' | relative_url }}" alt="Image-conditioned text generation sample 34" />
       <a class="sample-nav next" href="#it2t-sample-35" aria-label="Next sample">›</a>
       <figcaption><strong>Prompt:</strong> Generate a detailed caption for this image.<br /><strong>Output:</strong> The image shows a young boy wearing a grey vest over a white shirt, with a blue accent.</figcaption>
     </figure>
     <figure class="sample-slide" id="it2t-sample-35">
       <a class="sample-nav prev" href="#it2t-sample-34" aria-label="Previous sample">‹</a>
-      <img src="./assets/it2t_samples/96.png" alt="Image-conditioned text generation sample 35" />
+      <img src="{{ '/assets/it2t_samples/96.png' | relative_url }}" alt="Image-conditioned text generation sample 35" />
       <a class="sample-nav next" href="#it2t-sample-36" aria-label="Next sample">›</a>
       <figcaption><strong>Prompt:</strong> Generate a detailed caption for this image.<br /><strong>Output:</strong> The image shows a young girl with straight hair, wearing a yellow crop top and white shorts. She is making a fist with one hand and jumping, set against a blue background.</figcaption>
     </figure>
     <figure class="sample-slide" id="it2t-sample-36">
       <a class="sample-nav prev" href="#it2t-sample-35" aria-label="Previous sample">‹</a>
-      <img src="./assets/it2t_samples/97.png" alt="Image-conditioned text generation sample 36" />
+      <img src="{{ '/assets/it2t_samples/97.png' | relative_url }}" alt="Image-conditioned text generation sample 36" />
       <a class="sample-nav next" href="#it2t-sample-1" aria-label="Next sample">›</a>
       <figcaption><strong>Prompt:</strong> Generate a detailed caption for this image.<br /><strong>Output:</strong> The image shows the stands of a large soccer stadium. The field and running track are visible, with green grass surrounding the stands and a few spectators present.</figcaption>
     </figure>

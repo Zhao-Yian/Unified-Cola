@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="{{ page.lang | default: 'zh-CN' }}">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -15,6 +15,17 @@
     <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
   </head>
   <body>
+    <header class="site-header">
+      <nav class="site-nav" aria-label="Site navigation">
+        <a class="site-title" href="{{ '/blog/2026/unified-cola/' | relative_url }}">Yian Zhao's Blog</a>
+        <div class="site-links">
+          <a href="{{ '/blog/2026/unified-cola/' | relative_url }}">中文</a>
+          <a href="{{ '/blog/2026/unified-cola-en/' | relative_url }}">English</a>
+          <a href="https://hongcanguo.github.io/Cola-DLM/">Project</a>
+          <a href="https://arxiv.org/abs/2605.06548">Paper</a>
+        </div>
+      </nav>
+    </header>
     <main class="page-shell">
       <article class="page-content">
         {{ content }}
