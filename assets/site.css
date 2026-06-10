@@ -28,8 +28,15 @@ body {
   line-height: 1.72;
 }
 
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
 .page-shell {
   width: min(100% - 2rem, 1080px);
+  max-width: 100%;
   margin: 0 auto;
   padding: 2.5rem 0 4rem;
 }
@@ -41,8 +48,12 @@ body {
   background: rgba(255, 255, 255, 0.94);
   box-shadow: var(--shadow);
   max-width: 100%;
-  overflow-x: hidden;
+  overflow-x: clip;
   overflow-wrap: anywhere;
+}
+
+.page-content > * {
+  max-width: 100%;
 }
 
 a {
