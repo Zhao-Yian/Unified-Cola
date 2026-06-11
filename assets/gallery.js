@@ -3,37 +3,22 @@
   const isZh = lang.toLowerCase().startsWith("zh");
 
   const copy = {
-    landscape: isZh ? "横图" : "Landscape",
-    portrait: isZh ? "竖图" : "Portrait",
     open: isZh ? "点击查看大图" : "Click to open",
     close: isZh ? "关闭" : "Close",
     previous: isZh ? "上一张" : "Previous",
     next: isZh ? "下一张" : "Next",
-    hint: isZh
-      ? "切换横图/竖图缩略图，点击图片可放大查看。"
-      : "Switch between landscape and portrait thumbnails, then click an image to inspect it.",
+    t2iHint: isZh ? "点击查看文本提示" : "Click to view the text prompt",
+    it2tHint: isZh
+      ? "点击查看指令和回答"
+      : "Click to view the instruction and answer",
   };
 
-  const ratioLabels = {
-    landscape: copy.landscape,
-    portrait: copy.portrait,
-  };
-
-  const classify = (img) => {
-    const width = img.naturalWidth || img.width;
-    const height = img.naturalHeight || img.height;
-    if (!width || !height) return "landscape";
-
-    const ratio = width / height;
-    return ratio >= 1 ? "landscape" : "portrait";
-  };
-
-  const readyImage = (img) => {
-    if (img.complete && img.naturalWidth) return Promise.resolve();
-    return new Promise((resolve) => {
-      img.addEventListener("load", resolve, { once: true });
-      img.addEventListener("error", resolve, { once: true });
-    });
+  const getGalleryHint = (carousel) => {
+    const firstSlide = carousel.querySelector(".sample-slide");
+    if (firstSlide && firstSlide.id.startsWith("it2t-")) {
+      return copy.it2tHint;
+    }
+    return copy.t2iHint;
   };
 
   const createLightbox = () => {
@@ -119,106 +104,44 @@
     if (event.key === "ArrowRight") stepLightbox(1);
   });
 
-  const enhanceCarousel = async (carousel, index) => {
+  const enhanceCarousel = (carousel, index) => {
     const slides = Array.from(carousel.querySelectorAll(".sample-slide"));
     if (!slides.length) return;
 
     carousel.classList.add("is-enhanced");
 
-    await Promise.all(
-      slides.map(async (slide) => {
-        const img = slide.querySelector("img");
-        if (!img) return;
+    slides.forEach((slide) => {
+      const img = slide.querySelector("img");
+      if (!img) return;
 
-        await readyImage(img);
-        const ratio = classify(img);
-        slide.dataset.ratio = ratio;
+      img.setAttribute("loading", "lazy");
+      img.setAttribute("decoding", "async");
+      img.setAttribute("tabindex", "0");
+      img.setAttribute("role", "button");
+      img.setAttribute("aria-label", `${copy.open}: ${img.alt || ""}`);
 
-        img.setAttribute("loading", "lazy");
-        img.setAttribute("decoding", "async");
-        img.setAttribute("tabindex", "0");
-        img.setAttribute("role", "button");
-        img.setAttribute("aria-label", `${copy.open}: ${img.alt || ""}`);
-
-        img.addEventListener("click", () => openLightbox(carousel, slide));
-        img.addEventListener("keydown", (event) => {
-          if (event.key === "Enter" || event.key === " ") {
-            event.preventDefault();
-            openLightbox(carousel, slide);
-          }
-        });
-      })
-    );
-
-    const counts = slides.reduce(
-      (acc, slide) => {
-        const ratio = slide.dataset.ratio || "landscape";
-        acc[ratio] += 1;
-        return acc;
-      },
-      { landscape: 0, portrait: 0 }
-    );
-
-    const defaultRatio = counts.landscape ? "landscape" : "portrait";
-    carousel.dataset.activeRatio = defaultRatio;
+      img.addEventListener("click", () => openLightbox(carousel, slide));
+      img.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          openLightbox(carousel, slide);
+        }
+      });
+    });
 
     const controls = document.createElement("div");
     controls.className = "sample-gallery-controls";
     controls.setAttribute(
       "aria-label",
-      isZh ? "按宽高比筛选样本" : "Filter samples by aspect ratio"
+      isZh ? "样本查看提示" : "Sample viewing hint"
     );
 
     const hint = document.createElement("p");
     hint.className = "sample-gallery-hint";
-    hint.textContent = copy.hint;
+    hint.textContent = getGalleryHint(carousel);
 
-    const chips = document.createElement("div");
-    chips.className = "sample-ratio-chips";
-
-    const showRatio = (ratio, shouldScroll = true) => {
-      carousel.dataset.activeRatio = ratio;
-      chips.querySelectorAll(".sample-ratio-chip").forEach((chip) => {
-        const active = chip.dataset.ratio === ratio;
-        chip.classList.toggle("is-active", active);
-        chip.setAttribute("aria-pressed", active ? "true" : "false");
-      });
-
-      slides.forEach((slide) => {
-        slide.hidden = slide.dataset.ratio !== ratio;
-      });
-
-      const firstVisible = visibleSlides(carousel)[0];
-      if (shouldScroll && firstVisible) {
-        firstVisible.scrollIntoView({
-          behavior: "smooth",
-          block: "nearest",
-          inline: "start",
-        });
-      }
-    };
-
-    Object.keys(ratioLabels).forEach((ratio) => {
-      const button = document.createElement("button");
-      button.type = "button";
-      button.className = "sample-ratio-chip";
-      button.dataset.ratio = ratio;
-      button.textContent = `${ratioLabels[ratio]} ${counts[ratio]}`;
-      button.setAttribute(
-        "aria-pressed",
-        ratio === defaultRatio ? "true" : "false"
-      );
-      if (ratio === defaultRatio) button.classList.add("is-active");
-      if (!counts[ratio]) button.disabled = true;
-
-      button.addEventListener("click", () => showRatio(ratio));
-
-      chips.append(button);
-    });
-
-    controls.append(hint, chips);
+    controls.append(hint);
     carousel.prepend(controls);
-    showRatio(defaultRatio, false);
 
     carousel.dataset.galleryIndex = String(index + 1);
   };

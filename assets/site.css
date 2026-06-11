@@ -369,9 +369,8 @@ code {
 .sample-gallery-controls {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  margin-bottom: 1rem;
+  justify-content: flex-start;
+  margin-bottom: 0.9rem;
 }
 
 .sample-gallery-hint {
@@ -381,58 +380,15 @@ code {
   line-height: 1.45;
 }
 
-.sample-ratio-chips {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-  gap: 0.45rem;
-}
-
-.sample-ratio-chip {
-  appearance: none;
-  border: 1px solid rgba(49, 84, 212, 0.18);
-  border-radius: 999px;
-  padding: 0.42rem 0.72rem;
-  background: rgba(255, 255, 255, 0.86);
-  color: var(--muted);
-  cursor: pointer;
-  font: inherit;
-  font-size: 0.88rem;
-  line-height: 1;
-  transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease, color 0.18s ease;
-}
-
-.sample-ratio-chip:hover {
-  transform: translateY(-1px);
-  border-color: rgba(49, 84, 212, 0.45);
-  color: var(--accent);
-}
-
-.sample-ratio-chip.is-active {
-  border-color: transparent;
-  background: var(--accent);
-  color: #fff;
-  box-shadow: 0 10px 24px rgba(49, 84, 212, 0.25);
-}
-
-.sample-ratio-chip:disabled {
-  cursor: not-allowed;
-  opacity: 0.42;
-}
-
 .sample-carousel.is-enhanced .sample-track {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 136px), 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 128px), 1fr));
   grid-auto-flow: dense;
   align-items: start;
   gap: 0.65rem;
   overflow: visible;
   scroll-snap-type: none;
   padding: 0;
-}
-
-.sample-carousel.is-enhanced[data-active-ratio="portrait"] .sample-track {
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 108px), 1fr));
 }
 
 .sample-carousel.is-enhanced .sample-slide {
@@ -463,7 +419,7 @@ code {
   width: 100%;
   max-height: none;
   height: auto;
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 1 / 1;
   object-fit: cover;
   cursor: zoom-in;
   background: #eef1f6;
@@ -473,14 +429,6 @@ code {
 .sample-carousel.is-enhanced .sample-slide:hover img {
   filter: saturate(1.05) contrast(1.02);
   transform: scale(1.01);
-}
-
-.sample-carousel.is-enhanced[data-active-ratio="landscape"] .sample-slide img {
-  aspect-ratio: 16 / 9;
-}
-
-.sample-carousel.is-enhanced[data-active-ratio="portrait"] .sample-slide img {
-  aspect-ratio: 3 / 4;
 }
 
 .sample-carousel.is-enhanced .sample-slide figcaption {
@@ -635,21 +583,8 @@ code {
     font-size: 1.15rem;
   }
 
-  .sample-gallery-controls {
-    align-items: flex-start;
-    flex-direction: column;
-  }
-
-  .sample-ratio-chips {
-    justify-content: flex-start;
-  }
-
   .sample-carousel.is-enhanced .sample-track {
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, 112px), 1fr));
-  }
-
-  .sample-carousel.is-enhanced[data-active-ratio="portrait"] .sample-track {
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, 92px), 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 96px), 1fr));
   }
 
   .sample-carousel.is-enhanced .sample-slide,
