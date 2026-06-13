@@ -14,6 +14,8 @@ tags:
 
 # Unified Multimodal Flow Matching with Cola DLM
 
+Published: 2026-06-09
+
 ### Abstract
 > Recent unified multimodal pretraining has moved beyond early single-stream autoregressive sequence modeling toward two-tower Reasoner--Generator paradigms, including cascaded MLLM-to-diffusion systems and parallel Mixture-of-Transformer (MoT) architectures. This post explores a different route built on **Cola DLM** (Continuous Latent Diffusion Language Model) [1]. We map both text and visual signals into continuous latent spaces and use a shared block-causal MMDiT to parameterize a latent generative distribution, so that understanding (text output) and generation (pixel output) can be trained through a unified interface. From this perspective, understanding and generation are different conditional views of the same multimodal joint distribution. Joint multitask pretraining constrains the shared generative distribution from multiple conditional directions, encouraging the model to learn semantic representations, cross-modal alignment, and generative dynamics in one representation space. We describe the architecture, its main design choices, and qualitative results on **text-to-text**, **text-to-image**, and **image-and-text-to-text** pretraining tasks.
 <!-- The current experiments are positioned as a proof of concept: we validate the feasibility and early convergence behavior of the unified architecture, without large-scale SFT or RL post-training. -->
