@@ -14,15 +14,44 @@ tags:
 
 # Unified Multimodal Flow Matching with Cola DLM
 
-Published: 2026-06-09
+<div class="post-meta">
+  <span>Published: 2026-06-09</span>
+  <span>Words: about 5,500</span>
+  <span>Reading time: about 25 min</span>
+</div>
 
-### Abstract
+<details class="toc-card" open markdown="1">
+<summary>Contents</summary>
+
+- [Abstract](#abstract)
+- [1. Motivation: Why a Different Route to Unified Modeling?](#motivation)
+  - [A Brief Recap of Cola DLM](#cola-dlm-recap)
+- [2. A Joint Distribution over Continuous Latents](#joint-latents)
+- [3. Architecture and Training](#architecture-training)
+  - [Sequence Layout](#sequence-layout)
+  - [Attention Masks as Task Semantics](#attention-masks)
+  - [Objective](#objective)
+  - [Training Setup](#training-setup)
+- [4. Qualitative Results](#qualitative-results)
+  - [4.1 Text-to-image](#text-to-image)
+  - [4.2 Image-and-text-to-text](#image-text-to-text)
+  - [4.3 Text-to-text](#text-to-text)
+- [5. Future Experiments: From Feasibility to Quantitative Comparison](#future-experiments)
+- [6. Roadmap: More Modalities under a Shared Joint Prior](#roadmap)
+- [References](#references)
+</details>
+
+<div class="post-note" markdown="1">
+**Reading guide.** The post starts with motivation and joint latent modeling, then moves into training design and qualitative results; for a quick pass, start with Sections 1, 3, and 4.
+</div>
+
+### Abstract {#abstract}
 > Recent unified multimodal pretraining has moved beyond early single-stream autoregressive sequence modeling toward two-tower Reasoner--Generator paradigms, including cascaded MLLM-to-diffusion systems and parallel Mixture-of-Transformer (MoT) architectures. This post explores a different route built on **Cola DLM** (Continuous Latent Diffusion Language Model) [1]. We map both text and visual signals into continuous latent spaces and use a shared block-causal MMDiT to parameterize a latent generative distribution, so that understanding (text output) and generation (pixel output) can be trained through a unified interface. From this perspective, understanding and generation are different conditional views of the same multimodal joint distribution. Joint multitask pretraining constrains the shared generative distribution from multiple conditional directions, encouraging the model to learn semantic representations, cross-modal alignment, and generative dynamics in one representation space. We describe the architecture, its main design choices, and qualitative results on **text-to-text**, **text-to-image**, and **image-and-text-to-text** pretraining tasks.
 <!-- The current experiments are positioned as a proof of concept: we validate the feasibility and early convergence behavior of the unified architecture, without large-scale SFT or RL post-training. -->
 
 ---
 
-## 1. Motivation: Why a Different Route to Unified Modeling?
+## 1. Motivation: Why a Different Route to Unified Modeling? {#motivation}
 
 In recent years, the central question in unified multimodal pretraining has shifted from whether a single system can support both understanding and generation to how the understanding and generation pathways should interact. At the architectural level, existing approaches can be broadly grouped into three lines of work.
 
@@ -44,7 +73,7 @@ Under this view, understanding (text output) and generation (pixel output) corre
 
 Cola DLM provides a mature continuous-latent formulation for text generation. In this post, we show how the same formulation can be extended naturally to other modalities and used as the basis for this unified training paradigm.
 
-### A Brief Recap of Cola DLM
+### A Brief Recap of Cola DLM {#cola-dlm-recap}
 
 Cola DLM is a continuous latent-variable diffusion language model. Its key idea is to avoid denoising at the token level. Instead, it:
 
@@ -62,7 +91,7 @@ This decomposition explicitly separates **global semantic organization** in cont
 
 ---
 
-## 2. A Joint Distribution over Continuous Latents
+## 2. A Joint Distribution over Continuous Latents {#joint-latents}
 
 Unified modeling should not rely only on a shared backbone, nor should it force different modalities into exactly the same representation space. A more natural approach is to first map text and visual observations into continuous latent variables, and then let a shared block-causal MMDiT model the joint distribution over these latents. In this way, textual semantics, visual content, and their correspondence are all handled through the same interface.
 
@@ -103,7 +132,7 @@ Thus, the latent variables carry compressed high-level semantics, while the deco
 
 ---
 
-## 3. Architecture and Training
+## 3. Architecture and Training {#architecture-training}
 
 ![**Figure 1.** Unified text--vision modeling with Cola DLM. Left: text continuation and image-conditioned text generation. Middle: text-to-image generation. Right: method overview. Text and visual signals are mapped into continuous latents and modeled by a shared block-causal MMDiT as a joint generative distribution.]({{ '/assets/fig-unified-overview.png' | relative_url }})
 
@@ -119,7 +148,7 @@ A single model supports three tasks under the same framework:
 - **Text-to-image (T2I)**,
 - **Image-and-text-to-text (IT2T)**, including captioning and visual question answering.
 
-### Sequence Layout
+### Sequence Layout {#sequence-layout}
 
 We pack continuous latents into a sequence and annotate each position with two integers. Suppose a packed sequence has $N$ positions. Position $i$ carries:
 
@@ -143,7 +172,7 @@ The task is defined only by (i) which segments are present and in what order, an
 
 Within a single forward pass, multiple samples, possibly from different tasks under gradient accumulation, are concatenated into one long sequence. Attention is additionally constrained to stay **within the same sample**: query position $i$ may attend only to key position $j$ from the same sample.
 
-### Attention Masks as Task Semantics
+### Attention Masks as Task Semantics {#attention-masks}
 
 The task semantics of the shared block-causal MMDiT are controlled by the attention mask $M_{ij}\in\{0,1\}$, which determines whether query $i$ may attend to key $j$. The mask is defined by the following segment-conditioned rules. **Figure 2** visualizes small rendered examples for each task, with rows as queries and columns as attended keys.
 
@@ -178,7 +207,7 @@ The instruction and image thus form a single fully bidirectional condition block
 
 **Text-to-text** is the special case of the T2I rule with the image segment removed: a clean prefix is encoded in a block-causal manner, and the remaining text blocks are generated by block diffusion conditioned on previous clean blocks.
 
-### Objective
+### Objective {#objective}
 
 The per-step loss is the sum of all active objectives:
 
@@ -188,7 +217,7 @@ $$
 
 Each term is a velocity-prediction MSE in the corresponding latent space. $\mathcal{L}_{\text{REPA}}$ is an optional representation-alignment term [20], active only for T2I, that aligns intermediate DiT features with visual-encoder features to accelerate generation convergence. During training, tasks are sampled according to configurable task ratios, and the task choice is synchronized across workers to keep distributed collective calls consistent.
 
-### Training Setup
+### Training Setup {#training-setup}
 
 - **Noise schedule.** Both modalities use a rectified-flow linear interpolation schedule, velocity prediction, and an Euler sampler.
 - **Block-level noise.** For text, each block samples its own timestep and all tokens within the block share that timestep, following the hierarchical block-causal design of Cola DLM. Image latents are noised as a single block.
@@ -208,11 +237,11 @@ Under this limited data and compute budget, the model can already generate coher
 
 ---
 
-## 4. Qualitative Results
+## 4. Qualitative Results {#qualitative-results}
 
 This section reports qualitative results on the three tasks.
 
-### 4.1 Text-to-image
+### 4.1 Text-to-image {#text-to-image}
 
 Click any thumbnail to inspect the image in a larger viewer and continue browsing sample by sample.
 
@@ -497,7 +526,7 @@ Click any thumbnail to inspect the image in a larger viewer and continue browsin
   </div>
 </div>
 
-### 4.2 Image-and-text-to-text
+### 4.2 Image-and-text-to-text {#image-text-to-text}
 
 After training on about **5M** image-text pairs, the model shows preliminary image-captioning ability and can generate text conditioned on image content.
 
@@ -762,13 +791,13 @@ After training on about **5M** image-text pairs, the model shows preliminary ima
 
 > *Note on images.* The images used in the image-and-text-to-text examples are generated by **external image-generation models from ground-truth captions**, to avoid copyright issues associated with real photographs.
 
-### 4.3 Text-to-text
+### 4.3 Text-to-text {#text-to-text}
 
 Although trained with only about **1B** text tokens, the unified model retains reasonably coherent text-continuation ability across conversational, narrative, expository, technical, and article-style prompts.
 
 ---
 
-## 5. Future Experiments: From Feasibility to Quantitative Comparison
+## 5. Future Experiments: From Feasibility to Quantitative Comparison {#future-experiments}
 
 The current results primarily validate the **feasibility** of the proposed unified modeling scheme: a single model can acquire text generation, image generation, and preliminary image-text understanding ability under the same pretraining recipe. The next question is whether this unified model, after scaling pretraining and adding necessary SFT/RL post-training, can outperform standard alternatives. To answer this, we plan two controlled quantitative studies.
 
@@ -782,7 +811,7 @@ Future work will also report scaling behavior, controlled matched comparisons, a
 
 ---
 
-## 6. Roadmap: More Modalities under a Shared Joint Prior
+## 6. Roadmap: More Modalities under a Shared Joint Prior {#roadmap}
 
 The framework naturally extends to more modalities by introducing the corresponding block layouts and attention rules. Potential extensions include:
 
@@ -793,7 +822,7 @@ The framework naturally extends to more modalities by introducing the correspond
 
 ---
 
-## References
+## References {#references}
 
 [1] H. Guo, Q. Zhao, Y. Zhao, S. Nie, R. Zhu, Q. Guo, F. Wang, T. Yang, H. Zhao, G. Wei, and Y. Zeng, "Continuous Latent Diffusion Language Model," arXiv:2605.06548, 2026. <https://arxiv.org/abs/2605.06548>
 
