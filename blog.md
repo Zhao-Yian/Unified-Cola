@@ -5,6 +5,7 @@ title: "Unified Multimodal Flow Matching with Cola DLM"
 thumbnail: /assets/fig-unified-overview.png
 authors: Yian Zhao
 permalink: /blog/2026/unified-cola-en/
+view_count_offset: 1000
 tags:
   - unified multimodal pretraining
   - latent diffusion model
@@ -18,7 +19,7 @@ tags:
   <span>Published: 2026-06-09</span>
   <span>Words: about 5,500</span>
   <span>Reading time: about 25 min</span>
-  <span id="busuanzi_container_page_pv">Views: <span id="busuanzi_value_page_pv">Loading</span></span>
+  <span id="busuanzi_container_page_pv">Views: <span id="busuanzi_value_page_pv" data-view-count-offset="{{ page.view_count_offset | default: 0 }}">Loading</span></span>
 </div>
 
 <details class="toc-card" open markdown="1">

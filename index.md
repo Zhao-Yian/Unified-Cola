@@ -5,6 +5,7 @@ title: "基于 Cola DLM 的统一多模态 Flow Matching"
 description: "基于 Cola DLM 的统一文本-视觉建模"
 thumbnail: /assets/fig-unified-overview.png
 permalink: /blog/2026/unified-cola/
+view_count_offset: 1000
 ---
 [English]({{ '/blog/2026/unified-cola-en/' | relative_url }}) | **中文**
 
@@ -14,7 +15,7 @@ permalink: /blog/2026/unified-cola/
   <span>发布日期：2026-06-09</span>
   <span>字数：约 6,900</span>
   <span>阅读时间：约 14 分钟</span>
-  <span id="busuanzi_container_page_pv">浏览量：<span id="busuanzi_value_page_pv">加载中</span></span>
+  <span id="busuanzi_container_page_pv">浏览量：<span id="busuanzi_value_page_pv" data-view-count-offset="{{ page.view_count_offset | default: 0 }}">加载中</span></span>
 </div>
 
 <details class="toc-card" open markdown="1">

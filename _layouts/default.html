@@ -5,6 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}</title>
     <meta name="description" content="{{ page.description | default: site.description | strip_html | normalize_whitespace }}">
+    <script>
+      (function () {
+        var storedTheme = null;
+        try {
+          storedTheme = localStorage.getItem('site-theme');
+        } catch (error) {
+          storedTheme = null;
+        }
+        if (storedTheme !== 'light' && storedTheme !== 'dark') {
+          storedTheme = 'dark';
+        }
+        document.documentElement.dataset.theme = storedTheme || 'dark';
+      })();
+    </script>
     <link rel="stylesheet" href="{{ '/assets/site.css' | relative_url }}">
     <script>
       window.MathJax = {
@@ -14,6 +28,62 @@
     </script>
     <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
     <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        var viewCount = document.getElementById('busuanzi_value_page_pv');
+        if (!viewCount) return;
+
+        var offset = Number(viewCount.dataset.viewCountOffset || 0);
+        if (!offset) return;
+
+        function applyOffset() {
+          if (viewCount.dataset.adjusting === 'true') return;
+
+          var rawValue = Number(viewCount.textContent.replace(/[^\d]/g, ''));
+          if (!Number.isFinite(rawValue) || rawValue <= 0) return;
+
+          viewCount.dataset.adjusting = 'true';
+          viewCount.textContent = (rawValue + offset).toLocaleString('en-US');
+          requestAnimationFrame(function () {
+            delete viewCount.dataset.adjusting;
+          });
+        }
+
+        applyOffset();
+        new MutationObserver(applyOffset).observe(viewCount, { childList: true, characterData: true, subtree: true });
+      });
+    </script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        var toggle = document.querySelector('[data-theme-toggle]');
+        if (!toggle) return;
+
+        var isZh = (document.documentElement.lang || '').toLowerCase().startsWith('zh');
+
+        function renderTheme(theme) {
+          if (theme !== 'light' && theme !== 'dark') {
+            theme = 'dark';
+          }
+          var nextTheme = theme === 'dark' ? 'light' : 'dark';
+          document.documentElement.dataset.theme = theme;
+          toggle.textContent = isZh ? (theme === 'dark' ? '浅色模式' : '黑夜模式') : (theme === 'dark' ? 'Light mode' : 'Dark mode');
+          toggle.setAttribute('aria-label', isZh ? '切换颜色模式' : 'Toggle color mode');
+          toggle.setAttribute('aria-pressed', String(theme === 'dark'));
+          toggle.dataset.nextTheme = nextTheme;
+        }
+
+        renderTheme(document.documentElement.dataset.theme || 'dark');
+        toggle.addEventListener('click', function () {
+          var nextTheme = toggle.dataset.nextTheme || 'light';
+          try {
+            localStorage.setItem('site-theme', nextTheme);
+          } catch (error) {
+            // Theme changes should still work when storage is unavailable.
+          }
+          renderTheme(nextTheme);
+        });
+      });
+    </script>
     <script defer src="{{ '/assets/gallery.js' | relative_url }}"></script>
   </head>
   <body>
@@ -26,6 +96,7 @@
           <a href="{{ '/blog/2026/unified-cola-en/' | relative_url }}">English</a>
           <a href="https://hongcanguo.github.io/Cola-DLM/">Project</a>
           <a href="https://arxiv.org/abs/2605.06548">Paper</a>
+          <button class="theme-toggle" type="button" data-theme-toggle>Light mode</button>
         </div>
       </nav>
     </header>
