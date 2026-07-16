@@ -18,6 +18,7 @@ tags:
   <span>Published: 2026-06-09</span>
   <span>Words: about 5,500</span>
   <span>Reading time: about 25 min</span>
+  <span id="busuanzi_container_page_pv">Views: <span id="busuanzi_value_page_pv">Loading</span></span>
 </div>
 
 <details class="toc-card" open markdown="1">

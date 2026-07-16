@@ -14,6 +14,7 @@ permalink: /blog/2026/unified-cola/
   <span>发布日期：2026-06-09</span>
   <span>字数：约 6,900</span>
   <span>阅读时间：约 14 分钟</span>
+  <span id="busuanzi_container_page_pv">浏览量：<span id="busuanzi_value_page_pv">加载中</span></span>
 </div>
 
 <details class="toc-card" open markdown="1">
