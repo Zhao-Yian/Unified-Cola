@@ -7,7 +7,15 @@ thumbnail: /assets/fig-unified-overview.png
 permalink: /blog/2026/unified-cola/
 view_count_offset: 1000
 ---
-[English]({{ '/blog/2026/unified-cola-en/' | relative_url }}) | **中文**
+<nav class="post-actions" aria-label="文章链接">
+  <a href="{{ '/blog/2026/unified-cola-en/' | relative_url }}">English</a>
+  <span aria-hidden="true">|</span>
+  <span>中文</span>
+  <span aria-hidden="true">|</span>
+  <a href="https://arxiv.org/abs/2605.06548">Paper</a>
+  <span aria-hidden="true">|</span>
+  <a href="https://hongcanguo.github.io/Cola-DLM/">Project</a>
+</nav>
 
 # 基于 Cola DLM 的统一多模态 Flow Matching
 

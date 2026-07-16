@@ -11,7 +11,15 @@ tags:
   - latent diffusion model
   - flow matching
 ---
-**English** | [中文]({{ '/blog/2026/unified-cola/' | relative_url }})
+<nav class="post-actions" aria-label="Article links">
+  <span>English</span>
+  <span aria-hidden="true">|</span>
+  <a href="{{ '/blog/2026/unified-cola/' | relative_url }}">中文</a>
+  <span aria-hidden="true">|</span>
+  <a href="https://arxiv.org/abs/2605.06548">Paper</a>
+  <span aria-hidden="true">|</span>
+  <a href="https://hongcanguo.github.io/Cola-DLM/">Project</a>
+</nav>
 
 # Unified Multimodal Flow Matching with Cola DLM
 
